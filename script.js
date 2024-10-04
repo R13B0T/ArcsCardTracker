@@ -15,11 +15,20 @@ if (themeToggle) {
 
 // Initialize
 var currentType = 'court';
+var originalCards = []; // Store original card elements
+
+// Collect all cards and store them
+window.onload = function() {
+    var allCards = document.querySelectorAll('.card');
+    for (var i = 0; i < allCards.length; i++) {
+        originalCards.push(allCards[i].cloneNode(true));
+    }
+    displayAllCards('court'); // Display initial cards
+};
 
 function resetSelections() {
-    var cards = document.querySelectorAll('.card');
-    for (var i = 0; i < cards.length; i++) {
-        var card = cards[i];
+    for (var i = 0; i < originalCards.length; i++) {
+        var card = originalCards[i];
         card.setAttribute('data-player', 'none');
         var select = card.querySelector('select');
         if (select) select.value = 'none';
@@ -54,13 +63,10 @@ function displayAllCards(type) {
         button.classList.toggle('active', button.getAttribute('data-type') === type);
     }
 
-    // Get all cards from the HTML
-    var allCards = document.querySelectorAll('.card');
-
     // Filter and sort cards
     var filteredCards = [];
-    for (var i = 0; i < allCards.length; i++) {
-        var card = allCards[i];
+    for (var i = 0; i < originalCards.length; i++) {
+        var card = originalCards[i];
         if (card.getAttribute('data-type') === type) {
             filteredCards.push(card);
         }
@@ -139,13 +145,10 @@ function filterCards(color) {
         button.classList.toggle('active', button.getAttribute('data-color') === color);
     }
 
-    // Get all cards from the HTML
-    var allCards = document.querySelectorAll('.card');
-
     // Filter and sort cards
     var filteredCards = [];
-    for (var i = 0; i < allCards.length; i++) {
-        var card = allCards[i];
+    for (var i = 0; i < originalCards.length; i++) {
+        var card = originalCards[i];
         if (card.getAttribute('data-player') === color) {
             filteredCards.push(card);
         }
@@ -235,6 +238,3 @@ for (var i = 0; i < filterButtons.length; i++) {
         });
     })(filterButtons[i]);
 }
-
-// Initialize the page with all Court cards
-displayAllCards('court');
