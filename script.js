@@ -1,180 +1,240 @@
 // Theme Toggle
-const themeToggle = document.getElementById('theme-toggle');
-const body = document.body;
+var themeToggle = document.getElementById('theme-toggle');
+var body = document.body;
 
-themeToggle.addEventListener('click', () => {
-    body.classList.toggle('dark-mode');
-    if (body.classList.contains('dark-mode')) {
-        themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-    } else {
-        themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-    }
-});
-
-// Cards Data (same as before)
-const cards = [
-    // ... (Your cards data array remains unchanged)
-];
+if (themeToggle) {
+    themeToggle.addEventListener('click', function() {
+        body.classList.toggle('dark-mode');
+        if (body.classList.contains('dark-mode')) {
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        } else {
+            themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+        }
+    });
+}
 
 // Initialize
-let currentType = 'court';
+var currentType = 'court';
 
 function resetSelections() {
-    cards.forEach(card => card.player = 'none');
+    var cards = document.querySelectorAll('.card');
+    for (var i = 0; i < cards.length; i++) {
+        var card = cards[i];
+        card.setAttribute('data-player', 'none');
+        var select = card.querySelector('select');
+        if (select) select.value = 'none';
+        var description = card.querySelector('.description');
+        if (description) description.style.display = 'none';
+    }
     displayAllCards(currentType);
 }
 
 function toggleDescription(select) {
-    const cardDiv = select.closest('.card');
-    const description = cardDiv.querySelector('.description');
-    if (select.value === 'none' || select.value === 'court' || select.value === 'draft') {
+    var cardDiv = select.closest('.card');
+    var description = cardDiv.querySelector('.description');
+    var value = select.value;
+    if (value === 'none' || value === 'court' || value === 'draft') {
         description.style.display = 'none';
     } else {
         description.style.display = 'block';
     }
+    // Update the data-player attribute
+    cardDiv.setAttribute('data-player', value);
 }
 
 function displayAllCards(type) {
     currentType = type;
-    const cardList = document.getElementById('card-list');
+    var cardList = document.getElementById('card-list');
     cardList.innerHTML = "";
 
     // Update active navigation button
-    document.querySelectorAll('.nav-button').forEach(button => {
+    var navButtons = document.querySelectorAll('.nav-button');
+    for (var i = 0; i < navButtons.length; i++) {
+        var button = navButtons[i];
         button.classList.toggle('active', button.getAttribute('data-type') === type);
-    });
+    }
+
+    // Get all cards from the HTML
+    var allCards = document.querySelectorAll('.card');
 
     // Filter and sort cards
-    let filteredCards = cards.filter(card => card.type === type);
+    var filteredCards = [];
+    for (var i = 0; i < allCards.length; i++) {
+        var card = allCards[i];
+        if (card.getAttribute('data-type') === type) {
+            filteredCards.push(card);
+        }
+    }
 
-    filteredCards.sort((a, b) => {
-        return a.title.localeCompare(b.title);
+    filteredCards.sort(function(a, b) {
+        return a.getAttribute('data-title').localeCompare(b.getAttribute('data-title'));
     });
 
-    filteredCards.forEach(card => {
-        const cardDiv = document.createElement("div");
-        cardDiv.classList.add("card");
+    for (var i = 0; i < filteredCards.length; i++) {
+        var card = filteredCards[i];
+        var clonedCard = card.cloneNode(true);
 
-        const title = document.createElement("h2");
-        title.textContent = card.title;
+        // Generate card content
+        var titleText = clonedCard.getAttribute('data-title');
+        var descriptionText = clonedCard.getAttribute('data-description');
+        var playerValue = clonedCard.getAttribute('data-player') || 'none';
 
-        const description = document.createElement("div");
+        clonedCard.innerHTML = '';
+
+        var title = document.createElement("h2");
+        title.textContent = titleText;
+
+        var description = document.createElement("div");
         description.classList.add("description");
-        description.textContent = card.description;
-        description.style.display = (card.player !== "none" && card.player !== "court" && card.player !== "draft") ? 'block' : 'none';
+        description.textContent = descriptionText;
+        if (playerValue !== "none" && playerValue !== "court" && playerValue !== "draft") {
+            description.style.display = 'block';
+        } else {
+            description.style.display = 'none';
+        }
 
-        const playerPicker = document.createElement("div");
+        var playerPicker = document.createElement("div");
         playerPicker.classList.add("player-picker");
 
-        const select = document.createElement("select");
-        let pickerOptions = `
-            <option value="none" ${card.player === "none" ? "selected" : ""}>None</option>
-            <option value="red" ${card.player === "red" ? "selected" : ""}>Red</option>
-            <option value="blue" ${card.player === "blue" ? "selected" : ""}>Blue</option>
-            <option value="gold" ${card.player === "gold" ? "selected" : ""}>Gold</option>
-            <option value="white" ${card.player === "white" ? "selected" : ""}>White</option>
-        `;
-        if (card.type === 'court') {
-            pickerOptions = `<option value="court" ${card.player === "court" ? "selected" : ""}>Court</option>` + pickerOptions;
-        } else if (card.type === 'leader' || card.type === 'lore') {
-            pickerOptions = `<option value="draft" ${card.player === "draft" ? "selected" : ""}>Draft</option>` + pickerOptions;
+        var select = document.createElement("select");
+        var pickerOptions = ''
+            + '<option value="none"' + (playerValue === "none" ? " selected" : "") + '>None</option>'
+            + '<option value="red"' + (playerValue === "red" ? " selected" : "") + '>Red</option>'
+            + '<option value="blue"' + (playerValue === "blue" ? " selected" : "") + '>Blue</option>'
+            + '<option value="gold"' + (playerValue === "gold" ? " selected" : "") + '>Gold</option>'
+            + '<option value="white"' + (playerValue === "white" ? " selected" : "") + '>White</option>';
+        var cardType = clonedCard.getAttribute('data-type');
+        if (cardType === 'court') {
+            pickerOptions = '<option value="court"' + (playerValue === "court" ? " selected" : "") + '>Court</option>' + pickerOptions;
+        } else if (cardType === 'leader' || cardType === 'lore') {
+            pickerOptions = '<option value="draft"' + (playerValue === "draft" ? " selected" : "") + '>Draft</option>' + pickerOptions;
         }
         select.innerHTML = pickerOptions;
 
         select.addEventListener("change", function() {
-            card.player = this.value;
+            var selectValue = this.value;
+            var parentCard = this.closest('.card');
+            parentCard.setAttribute('data-player', selectValue);
             toggleDescription(this);
         });
 
         playerPicker.appendChild(select);
 
-        cardDiv.appendChild(title);
-        cardDiv.appendChild(description);
-        cardDiv.appendChild(playerPicker);
+        clonedCard.appendChild(title);
+        clonedCard.appendChild(description);
+        clonedCard.appendChild(playerPicker);
 
-        cardList.appendChild(cardDiv);
-    });
+        cardList.appendChild(clonedCard);
+    }
 }
 
 function filterCards(color) {
-    const cardList = document.getElementById("card-list");
+    var cardList = document.getElementById("card-list");
     cardList.innerHTML = "";
 
     // Update active filter button
-    document.querySelectorAll('.filter-button').forEach(button => {
+    var filterButtons = document.querySelectorAll('.filter-button');
+    for (var i = 0; i < filterButtons.length; i++) {
+        var button = filterButtons[i];
         button.classList.toggle('active', button.getAttribute('data-color') === color);
-    });
+    }
+
+    // Get all cards from the HTML
+    var allCards = document.querySelectorAll('.card');
 
     // Filter and sort cards
-    let filteredCards = cards.filter(card => card.player === color);
+    var filteredCards = [];
+    for (var i = 0; i < allCards.length; i++) {
+        var card = allCards[i];
+        if (card.getAttribute('data-player') === color) {
+            filteredCards.push(card);
+        }
+    }
 
-    filteredCards.sort((a, b) => {
-        if (a.type === 'leader' && b.type !== 'leader') return -1;
-        if (b.type === 'leader' && a.type !== 'leader') return 1;
-        if (a.type === 'lore' && b.type !== 'lore') return -1;
-        if (b.type === 'lore' && a.type !== 'lore') return 1;
-        return a.title.localeCompare(b.title);
+    filteredCards.sort(function(a, b) {
+        var aType = a.getAttribute('data-type');
+        var bType = b.getAttribute('data-type');
+        if (aType === 'leader' && bType !== 'leader') return -1;
+        if (bType === 'leader' && aType !== 'leader') return 1;
+        if (aType === 'lore' && bType !== 'lore') return -1;
+        if (bType === 'lore' && aType !== 'lore') return 1;
+        return a.getAttribute('data-title').localeCompare(b.getAttribute('data-title'));
     });
 
-    filteredCards.forEach(card => {
-        const cardDiv = document.createElement("div");
-        cardDiv.classList.add("card");
+    for (var i = 0; i < filteredCards.length; i++) {
+        var card = filteredCards[i];
+        var clonedCard = card.cloneNode(true);
 
-        const title = document.createElement("h2");
-        title.textContent = card.title;
+        // Generate card content
+        var titleText = clonedCard.getAttribute('data-title');
+        var descriptionText = clonedCard.getAttribute('data-description');
+        var playerValue = clonedCard.getAttribute('data-player') || 'none';
 
-        const description = document.createElement("div");
+        clonedCard.innerHTML = '';
+
+        var title = document.createElement("h2");
+        title.textContent = titleText;
+
+        var description = document.createElement("div");
         description.classList.add("description");
-        description.textContent = card.description;
+        description.textContent = descriptionText;
         description.style.display = 'block';
 
-        const playerPicker = document.createElement("div");
+        var playerPicker = document.createElement("div");
         playerPicker.classList.add("player-picker");
 
-        const select = document.createElement("select");
-        let pickerOptions = `
-            <option value="none" ${card.player === "none" ? "selected" : ""}>None</option>
-            <option value="red" ${card.player === "red" ? "selected" : ""}>Red</option>
-            <option value="blue" ${card.player === "blue" ? "selected" : ""}>Blue</option>
-            <option value="gold" ${card.player === "gold" ? "selected" : ""}>Gold</option>
-            <option value="white" ${card.player === "white" ? "selected" : ""}>White</option>
-        `;
-        if (card.type === 'court') {
-            pickerOptions = `<option value="court" ${card.player === "court" ? "selected" : ""}>Court</option>` + pickerOptions;
-        } else if (card.type === 'leader' || card.type === 'lore') {
-            pickerOptions = `<option value="draft" ${card.player === "draft" ? "selected" : ""}>Draft</option>` + pickerOptions;
+        var select = document.createElement("select");
+        var pickerOptions = ''
+            + '<option value="none"' + (playerValue === "none" ? " selected" : "") + '>None</option>'
+            + '<option value="red"' + (playerValue === "red" ? " selected" : "") + '>Red</option>'
+            + '<option value="blue"' + (playerValue === "blue" ? " selected" : "") + '>Blue</option>'
+            + '<option value="gold"' + (playerValue === "gold" ? " selected" : "") + '>Gold</option>'
+            + '<option value="white"' + (playerValue === "white" ? " selected" : "") + '>White</option>';
+        var cardType = clonedCard.getAttribute('data-type');
+        if (cardType === 'court') {
+            pickerOptions = '<option value="court"' + (playerValue === "court" ? " selected" : "") + '>Court</option>' + pickerOptions;
+        } else if (cardType === 'leader' || cardType === 'lore') {
+            pickerOptions = '<option value="draft"' + (playerValue === "draft" ? " selected" : "") + '>Draft</option>' + pickerOptions;
         }
         select.innerHTML = pickerOptions;
 
         select.addEventListener("change", function() {
-            card.player = this.value;
+            var selectValue = this.value;
+            var parentCard = this.closest('.card');
+            parentCard.setAttribute('data-player', selectValue);
             toggleDescription(this);
         });
 
         playerPicker.appendChild(select);
 
-        cardDiv.appendChild(title);
-        cardDiv.appendChild(description);
-        cardDiv.appendChild(playerPicker);
+        clonedCard.appendChild(title);
+        clonedCard.appendChild(description);
+        clonedCard.appendChild(playerPicker);
 
-        cardList.appendChild(cardDiv);
-    });
+        cardList.appendChild(clonedCard);
+    }
 }
 
 // Event Listeners for Navigation and Filter Buttons
-document.querySelectorAll('.nav-button').forEach(button => {
-    button.addEventListener('click', () => {
-        const type = button.getAttribute('data-type');
-        displayAllCards(type);
-    });
-});
+var navButtons = document.querySelectorAll('.nav-button');
+for (var i = 0; i < navButtons.length; i++) {
+    (function(button) {
+        button.addEventListener('click', function() {
+            var type = button.getAttribute('data-type');
+            displayAllCards(type);
+        });
+    })(navButtons[i]);
+}
 
-document.querySelectorAll('.filter-button').forEach(button => {
-    button.addEventListener('click', () => {
-        const color = button.getAttribute('data-color');
-        filterCards(color);
-    });
-});
+var filterButtons = document.querySelectorAll('.filter-button');
+for (var i = 0; i < filterButtons.length; i++) {
+    (function(button) {
+        button.addEventListener('click', function() {
+            var color = button.getAttribute('data-color');
+            filterCards(color);
+        });
+    })(filterButtons[i]);
+}
 
 // Initialize the page with all Court cards
 displayAllCards('court');
