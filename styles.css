@@ -1,29 +1,31 @@
 /* Root Variables for Theming */
 :root {
     /* Light Mode Colors */
-    --primary-color: #2c3e50;        /* Dark blue */
-    --secondary-color: #ecf0f1;      /* Light gray */
-    --accent-color: #3498db;         /* Blue */
-    --font-color: #2c3e50;           /* Dark blue (for text) */
-    --background-color: #ecf0f1;     /* Light gray (for background) */
-    --card-background: #ffffff;      /* White background for cards */
-    --button-background: #3498db;    /* Blue buttons */
-    --button-color: #ffffff;         /* White text on buttons */
-    --nav-background: #2c3e50;       /* Dark blue for header */
+    --primary-color: #2c3e50;       /* Dark blue */
+    --secondary-color: #ecf0f1;     /* Light gray */
+    --accent-color: #3498db;        /* Blue */
+    --font-color: #2c3e50;          /* Dark blue (text color) */
+    --background-color: #ecf0f1;    /* Light gray (background color) */
+    --card-background: #ffffff;     /* White background for cards */
+    --button-background: #3498db;   /* Blue buttons */
+    --button-color: #ffffff;        /* White text on buttons */
+    --nav-background: #2c3e50;      /* Dark blue for header */
+    --header-text-color: #ffffff;   /* White text for header */
 }
 
 /* Dark Mode Variables */
 .dark-mode {
     /* Dark Mode Colors */
-    --primary-color: #ecf0f1;        /* Light gray */
-    --secondary-color: #2c3e50;      /* Dark blue */
-    --accent-color: #e74c3c;         /* Red */
-    --font-color: #ecf0f1;           /* Light gray (for text) */
-    --background-color: #2c3e50;     /* Dark blue (for background) */
-    --card-background: #34495e;      /* Darker blue for cards */
-    --button-background: #e74c3c;    /* Red buttons */
-    --button-color: #ffffff;         /* White text on buttons */
-    --nav-background: #2c3e50;       /* Dark blue for header */
+    --primary-color: #ecf0f1;       /* Light gray */
+    --secondary-color: #2c3e50;     /* Dark blue */
+    --accent-color: #e74c3c;        /* Red */
+    --font-color: #ecf0f1;          /* Light gray (text color) */
+    --background-color: #2c3e50;    /* Dark blue (background color) */
+    --card-background: #34495e;     /* Darker blue for cards */
+    --button-background: #e74c3c;   /* Red buttons */
+    --button-color: #ffffff;        /* White text on buttons */
+    --nav-background: #34495e;      /* Match header background to card background */
+    --header-text-color: #ecf0f1;   /* Light gray text for header */
 }
 
 /* Global Styles */
@@ -35,6 +37,7 @@ body {
     transition: background-color 0.3s, color 0.3s;
 }
 
+/* Container */
 .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -43,23 +46,203 @@ body {
 
 /* Navigation Bar */
 .navbar {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    align-items: center;
     background-color: var(--nav-background);
-    padding: 10px 20px;
+    padding: 20px;
     border-radius: 8px;
     margin-bottom: 20px;
+    position: relative; /* Enable positioning for child elements */
+}
+
+.navbar-header {
+    position: relative;
+    text-align: center; /* Center the header text */
 }
 
 .navbar h1 {
     margin: 0;
     font-size: 28px;
-    color: var(--secondary-color);
-    text-align: center;
-    margin-bottom: 10px;
-    text-shadow: 1px 1px 2px var(--primary-color);
+    color: var(--header-text-color);
+    text-shadow: 1px 1px 2px var(--secondary-color);
 }
 
-/* Rest of the CSS remains the same... */
+/* New Game Button */
+.reset-button {
+    position: absolute; /* Position absolutely within navbar-header */
+    top: 20px;          /* Adjust as needed */
+    left: 20px;         /* Move to the left side */
+    padding: 8px 16px;
+    background-color: var(--button-background);
+    color: var(--button-color);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.reset-button:hover {
+    background-color: var(--accent-color);
+}
+
+/* Navigation Buttons */
+.nav-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 20px; /* Adjust spacing below the header */
+    margin-bottom: 10px;
+}
+
+.nav-button {
+    padding: 10px 15px;
+    background-color: var(--button-background);
+    color: var(--button-color);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.nav-button:hover,
+.nav-button.active {
+    background-color: var(--accent-color);
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: var(--button-background);
+    color: var(--button-color);
+    border: none;
+    border-radius: 50%;
+    padding: 12px;
+    cursor: pointer;
+    z-index: 1000;
+    font-size: 18px;
+    transition: background-color 0.3s;
+}
+
+.theme-toggle:hover {
+    background-color: var(--accent-color);
+}
+
+/* Filter Buttons */
+.filter-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+.filter-button {
+    padding: 8px 12px;
+    background-color: var(--button-background);
+    color: var(--button-color);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.filter-button:hover,
+.filter-button.active {
+    background-color: var(--accent-color);
+}
+
+/* Card List */
+.card-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+/* Individual Card */
+.card {
+    background-color: var(--card-background);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+    color: var(--font-color);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card h2 {
+    margin-top: 0;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.card .description {
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.card .player-picker {
+    margin-top: 10px;
+}
+
+.card select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid var(--primary-color);
+    border-radius: 5px;
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    font-size: 14px;
+}
+
+.card select:focus {
+    outline: none;
+    border-color: var(--accent-color);
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .navbar-header {
+        padding-top: 10px;
+    }
+
+    .reset-button {
+        top: 10px;
+        left: 10px;
+    }
+
+    .navbar h1 {
+        font-size: 24px;
+    }
+
+    .nav-buttons {
+        margin-top: 10px;
+    }
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--primary-color);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--accent-color);
+}
+
+/* Accessibility Focus States */
+button:focus,
+select:focus {
+    outline: 2px dashed var(--accent-color);
+    outline-offset: 4px;
+}

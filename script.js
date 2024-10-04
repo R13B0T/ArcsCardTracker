@@ -1,4 +1,17 @@
-// Theme Toggle (same as before)
+// Theme Toggle
+var themeToggle = document.getElementById('theme-toggle');
+var body = document.body;
+
+if (themeToggle) {
+    themeToggle.addEventListener('click', function() {
+        body.classList.toggle('dark-mode');
+        if (body.classList.contains('dark-mode')) {
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        } else {
+            themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+        }
+    });
+}
 
 // Initialize
 var currentType = 'court';
@@ -8,12 +21,22 @@ var originalCards = [];
 window.onload = function() {
     var allCards = document.querySelectorAll('.card');
     for (var i = 0; i < allCards.length; i++) {
-        // Store a reference to the original card
         var card = allCards[i];
         originalCards.push(card);
     }
     displayAllCards('court'); // Display initial cards
 };
+
+// Update the data-player attribute on the original card
+function updateOriginalCardPlayer(title, playerValue) {
+    for (var i = 0; i < originalCards.length; i++) {
+        var card = originalCards[i];
+        if (card.getAttribute('data-title') === title) {
+            card.setAttribute('data-player', playerValue);
+            break;
+        }
+    }
+}
 
 function resetSelections() {
     for (var i = 0; i < originalCards.length; i++) {
@@ -32,20 +55,6 @@ function toggleDescription(select) {
     } else {
         description.style.display = 'block';
     }
-    // Update the data-player attribute on both the cloned card and the original card
-    var title = cardDiv.getAttribute('data-title');
-    updateOriginalCardPlayer(title, value);
-}
-
-function updateOriginalCardPlayer(title, playerValue) {
-    // Find the original card with the matching title and update its data-player attribute
-    for (var i = 0; i < originalCards.length; i++) {
-        var card = originalCards[i];
-        if (card.getAttribute('data-title') === title) {
-            card.setAttribute('data-player', playerValue);
-            break;
-        }
-    }
 }
 
 function displayAllCards(type) {
@@ -60,6 +69,16 @@ function displayAllCards(type) {
         button.classList.toggle('active', button.getAttribute('data-type') === type);
     }
 
+    // Determine player order based on card type
+    var playerOrder = [];
+    if (type === 'court') {
+        playerOrder = ['court', 'red', 'blue', 'gold', 'white', 'none'];
+    } else if (type === 'leader' || type === 'lore') {
+        playerOrder = ['draft', 'red', 'blue', 'gold', 'white', 'none'];
+    } else {
+        playerOrder = ['none'];
+    }
+
     // Filter and sort cards
     var filteredCards = [];
     for (var i = 0; i < originalCards.length; i++) {
@@ -69,13 +88,25 @@ function displayAllCards(type) {
         }
     }
 
+    // Sort the filtered cards based on player order and title
     filteredCards.sort(function(a, b) {
-        return a.getAttribute('data-title').localeCompare(b.getAttribute('data-title'));
+        var playerA = a.getAttribute('data-player') || 'none';
+        var playerB = b.getAttribute('data-player') || 'none';
+
+        var indexA = playerOrder.indexOf(playerA);
+        var indexB = playerOrder.indexOf(playerB);
+
+        if (indexA !== indexB) {
+            return indexA - indexB;
+        } else {
+            // If player assignments are the same, sort by title
+            return a.getAttribute('data-title').localeCompare(b.getAttribute('data-title'));
+        }
     });
 
     for (var i = 0; i < filteredCards.length; i++) {
         var card = filteredCards[i];
-        var clonedCard = card.cloneNode(false); // Clone without children
+        var clonedCard = card.cloneNode(false);
 
         // Generate card content
         var titleText = card.getAttribute('data-title');
@@ -111,8 +142,17 @@ function displayAllCards(type) {
         select.addEventListener("change", function() {
             var selectValue = this.value;
             var parentCard = this.closest('.card');
+            var title = parentCard.getAttribute('data-title');
+
+            // Update the data-player attribute on both the displayed card and the original card
             parentCard.setAttribute('data-player', selectValue);
+            updateOriginalCardPlayer(title, selectValue);
+
+            // Toggle the description visibility
             toggleDescription(this);
+
+            // Re-display the cards to trigger re-sorting
+            displayAllCards(currentType);
         });
 
         playerPicker.appendChild(select);
@@ -130,6 +170,9 @@ function displayAllCards(type) {
 
         cardList.appendChild(clonedCard);
     }
+
+    // Scroll to top
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function filterCards(color) {
@@ -152,6 +195,7 @@ function filterCards(color) {
         }
     }
 
+    // Sort the filtered cards
     filteredCards.sort(function(a, b) {
         var aType = a.getAttribute('data-type');
         var bType = b.getAttribute('data-type');
@@ -200,8 +244,17 @@ function filterCards(color) {
         select.addEventListener("change", function() {
             var selectValue = this.value;
             var parentCard = this.closest('.card');
+            var title = parentCard.getAttribute('data-title');
+
+            // Update the data-player attribute on both the displayed card and the original card
             parentCard.setAttribute('data-player', selectValue);
+            updateOriginalCardPlayer(title, selectValue);
+
+            // Toggle the description visibility
             toggleDescription(this);
+
+            // Re-display the filtered cards to trigger re-sorting
+            filterCards(color);
         });
 
         playerPicker.appendChild(select);
@@ -219,6 +272,28 @@ function filterCards(color) {
 
         cardList.appendChild(clonedCard);
     }
+
+    // Scroll to top
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// Event Listeners for Navigation and Filter Buttons (same as before)
+// Event Listeners for Navigation and Filter Buttons
+var navButtons = document.querySelectorAll('.nav-button');
+for (var i = 0; i < navButtons.length; i++) {
+    (function(button) {
+        button.addEventListener('click', function() {
+            var type = button.getAttribute('data-type');
+            displayAllCards(type);
+        });
+    })(navButtons[i]);
+}
+
+var filterButtons = document.querySelectorAll('.filter-button');
+for (var i = 0; i < filterButtons.length; i++) {
+    (function(button) {
+        button.addEventListener('click', function() {
+            var color = button.getAttribute('data-color');
+            filterCards(color);
+        });
+    })(filterButtons[i]);
+}
