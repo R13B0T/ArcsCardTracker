@@ -4,26 +4,26 @@
     --primary-color: #2c3e50;
     --secondary-color: #ecf0f1;
     --accent-color: #3498db;
-    --font-color: #2c3e50;
+    --font-color: #ffffff; /* Changed */
     --background-color: #ecf0f1;
     --card-background: rgba(255, 255, 255, 0.9);
     --button-background: #3498db;
     --button-color: #ffffff;
-    --nav-background: rgba(44, 62, 80, 0.9);
+    --nav-background: #2c3e50; /* Changed */
 }
 
 /* Dark Mode Variables */
-body.dark-mode {
-    /* Override Variables for Dark Mode */
+.dark-mode {
+    /* Dark Mode Colors */
     --primary-color: #ecf0f1;
     --secondary-color: #2c3e50;
     --accent-color: #e74c3c;
-    --font-color: #ecf0f1;
+    --font-color: #2c3e50; /* Changed */
     --background-color: #2c3e50;
     --card-background: rgba(44, 62, 80, 0.9);
     --button-background: #e74c3c;
     --button-color: #ffffff;
-    --nav-background: rgba(236, 240, 241, 0.9);
+    --nav-background: #ecf0f1; /* Changed */
 }
 
 /* Global Styles */
@@ -46,7 +46,7 @@ body {
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
-    align-items: center; /* Center align items */
+    align-items: center;
     background-color: var(--nav-background);
     padding: 10px 20px;
     border-radius: 8px;
@@ -57,16 +57,16 @@ body {
     margin: 0;
     font-size: 28px;
     color: var(--font-color);
-    text-align: center; /* Center the header text */
+    text-align: center;
     margin-bottom: 10px;
-    text-shadow: 1px 1px 2px var(--secondary-color); /* Add text shadow for readability */
+    text-shadow: 1px 1px 2px var(--secondary-color);
 }
 
 .nav-buttons {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    justify-content: center; /* Center the navigation buttons */
+    justify-content: center;
     margin-bottom: 10px;
 }
 
@@ -127,7 +127,7 @@ body {
 .filter-buttons {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center; /* Center the filter buttons */
+    justify-content: center;
     gap: 10px;
     margin-bottom: 30px;
 }
@@ -143,7 +143,8 @@ body {
     transition: background-color 0.3s;
 }
 
-.filter-button:hover {
+.filter-button:hover,
+.filter-button.active {
     background-color: var(--accent-color);
 }
 

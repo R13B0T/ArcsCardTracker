@@ -15,7 +15,7 @@ if (themeToggle) {
 
 // Initialize
 var currentType = 'court';
-var originalCards = []; // Store original card elements
+var originalCards = [];
 
 // Collect all cards and store them
 window.onload = function() {
@@ -42,7 +42,7 @@ function toggleDescription(select) {
     var cardDiv = select.closest('.card');
     var description = cardDiv.querySelector('.description');
     var value = select.value;
-    if (value === 'none' || value === 'court' || value === 'draft') {
+    if (value === 'none') {
         description.style.display = 'none';
     } else {
         description.style.display = 'block';
@@ -93,7 +93,7 @@ function displayAllCards(type) {
         var description = document.createElement("div");
         description.classList.add("description");
         description.textContent = descriptionText;
-        if (playerValue !== "none" && playerValue !== "court" && playerValue !== "draft") {
+        if (playerValue !== "none") {
             description.style.display = 'block';
         } else {
             description.style.display = 'none';
