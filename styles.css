@@ -47,15 +47,25 @@ body {
 /* Navigation Bar */
 .navbar {
     background-color: var(--nav-background);
-    padding: 20px;
+    padding: 10px 20px;
     border-radius: 8px;
     margin-bottom: 20px;
-    position: relative; /* Enable positioning for child elements */
+    position: relative;
+    text-align: center;
 }
 
 .navbar-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: relative;
-    text-align: center; /* Center the header text */
+}
+
+.navbar-header .reset-button {
+    position: absolute;
+    left: 20px; /* Adjust as needed */
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .navbar h1 {
@@ -65,11 +75,7 @@ body {
     text-shadow: 1px 1px 2px var(--secondary-color);
 }
 
-/* New Game Button */
 .reset-button {
-    position: absolute; /* Position absolutely within navbar-header */
-    top: 20px;          /* Adjust as needed */
-    left: 20px;         /* Move to the left side */
     padding: 8px 16px;
     background-color: var(--button-background);
     color: var(--button-color);
@@ -90,7 +96,7 @@ body {
     flex-wrap: wrap;
     gap: 10px;
     justify-content: center;
-    margin-top: 20px; /* Adjust spacing below the header */
+    margin-top: 10px;
     margin-bottom: 10px;
 }
 
@@ -141,18 +147,129 @@ body {
 
 .filter-button {
     padding: 8px 12px;
-    background-color: var(--button-background);
-    color: var(--button-color);
     border: none;
     border-radius: 5px;
     cursor: pointer;
     font-size: 14px;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, color 0.3s;
 }
 
+/* Specific Filter Button Colors */
+.red-button {
+    background-color: red;
+    color: white;
+}
+
+.red-button:hover,
+.red-button.active {
+    background-color: darkred;
+    color: white;
+}
+
+.blue-button {
+    background-color: blue;
+    color: white;
+}
+
+.blue-button:hover,
+.blue-button.active {
+    background-color: darkblue;
+    color: white;
+}
+
+.gold-button {
+    background-color: yellow;
+    color: black;
+}
+
+.gold-button:hover,
+.gold-button.active {
+    background-color: gold;
+    color: black;
+}
+
+.white-button {
+    background-color: white;
+    color: black;
+    border: 1px solid #ccc;
+}
+
+.white-button:hover,
+.white-button.active {
+    background-color: #f0f0f0;
+    color: black;
+}
+
+.court-button {
+    background-color: purple;
+    color: white;
+}
+
+.court-button:hover,
+.court-button.active {
+    background-color: indigo;
+    color: white;
+}
+
+.draft-button {
+    background-color: lightgray;
+    color: black;
+}
+
+.draft-button:hover,
+.draft-button.active {
+    background-color: gray;
+    color: black;
+}
+
+/* Ensure colors don't change in dark mode */
+.dark-mode .red-button,
+.dark-mode .red-button:hover,
+.dark-mode .red-button.active {
+    background-color: red;
+    color: white;
+}
+
+.dark-mode .blue-button,
+.dark-mode .blue-button:hover,
+.dark-mode .blue-button.active {
+    background-color: blue;
+    color: white;
+}
+
+.dark-mode .gold-button,
+.dark-mode .gold-button:hover,
+.dark-mode .gold-button.active {
+    background-color: yellow;
+    color: black;
+}
+
+.dark-mode .white-button,
+.dark-mode .white-button:hover,
+.dark-mode .white-button.active {
+    background-color: white;
+    color: black;
+}
+
+.dark-mode .court-button,
+.dark-mode .court-button:hover,
+.dark-mode .court-button.active {
+    background-color: purple;
+    color: white;
+}
+
+.dark-mode .draft-button,
+.dark-mode .draft-button:hover,
+.dark-mode .draft-button.active {
+    background-color: lightgray;
+    color: black;
+}
+
+/* Remove any conflicting hover and active styles */
 .filter-button:hover,
 .filter-button.active {
-    background-color: var(--accent-color);
+    background-color: unset;
+    color: unset;
 }
 
 /* Card List */
@@ -160,6 +277,7 @@ body {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 20px;
+    padding: 20px; /* Added padding to match the gap between cards */
 }
 
 /* Individual Card */
@@ -209,20 +327,23 @@ body {
 /* Responsive Design */
 @media (max-width: 600px) {
     .navbar-header {
-        padding-top: 10px;
+        flex-direction: column;
+        align-items: center;
     }
 
-    .reset-button {
-        top: 10px;
-        left: 10px;
+    .navbar-header .reset-button {
+        position: static;
+        transform: none;
+        margin-bottom: 10px;
     }
 
     .navbar h1 {
         font-size: 24px;
+        margin-bottom: 10px;
     }
 
     .nav-buttons {
-        margin-top: 10px;
+        justify-content: center;
     }
 }
 
