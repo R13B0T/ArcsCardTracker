@@ -146,30 +146,31 @@ function displayFilteredCards(cards) {
         // Create assignment buttons
         options.forEach(optionValue => {
             const button = document.createElement('button');
-            button.classList.add('assign-button');
+            button.classList.add('assign-button', `${optionValue}-button`);
             button.textContent = optionValue.charAt(0).toUpperCase() + optionValue.slice(1);
             button.setAttribute('data-value', optionValue);
             button.setAttribute('aria-label', `Assign to ${optionValue.charAt(0).toUpperCase() + optionValue.slice(1)}`);
-
+        
             // Highlight the button if it's the current assignment
             if (card.player === optionValue) {
                 button.classList.add('active');
             }
-
+        
             // Add event listener for assignment
             button.addEventListener('click', () => {
                 // Update the card's player assignment
                 card.player = optionValue;
-
+        
                 // Save updated card data to localStorage
                 localStorage.setItem('cardData', JSON.stringify(cardData));
-
+        
                 // Re-render the cards to reflect changes
                 displayAllCards(currentType);
             });
-
+        
             playerPicker.appendChild(button);
         });
+        
 
         cardElement.appendChild(playerPicker);
         cardList.appendChild(cardElement);
@@ -217,7 +218,7 @@ function formatDescription(text) {
 
     const formattedText = text.replace(regex, '<strong>$1</strong>');
     return formattedText;
-}
+} 
 
 // Function to reset all selections
 function resetSelections() {
