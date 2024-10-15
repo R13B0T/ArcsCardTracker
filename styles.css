@@ -1,5 +1,14 @@
 @font-face {
     font-family: 'FMBolyarPro';
+    src: url('fonts/FMBolyarPro-100.woff2') format('woff2'),
+         url('fonts/FMBolyarPro-100.woff') format('woff'),
+         url('fonts/FMBolyarPro-100.ttf') format('truetype');
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'FMBolyarPro';
     src: url('fonts/FMBolyarPro-300.woff2') format('woff2'),
          url('fonts/FMBolyarPro-300.woff') format('woff'),
          url('fonts/FMBolyarPro-300.ttf') format('truetype');
@@ -83,6 +92,7 @@ body {
     font-size: 28px;
     color: var(--header-text-color);
     font-family: 'FMBolyarPro', sans-serif; /* Font applied */
+    font-weight: 300;
     text-shadow: none; /* Removed shadow */
 }
 
@@ -195,11 +205,12 @@ body {
     margin-bottom: 30px;
 }
 
-/* Updated headers: H2 with max font size 14px */
+/* Updated headers: H2 with max font size 14px and FMBolyarPro-100 font */
 .card h2 {
     margin-top: 0;
     font-size: 14px; /* Max size set */
     font-family: 'FMBolyarPro', sans-serif; /* Font applied */
+    font-weight: 100; /* Using FMBolyarPro-100 */
     margin-bottom: 10px;
 }
 
@@ -239,7 +250,7 @@ body {
 }
 
 .filter-button.gold-button:hover,
-.filter-button.gold-button.active,
+filter-button.gold-button.active,
 .assign-button.gold-button:hover,
 .assign-button.gold-button.active {
     background-color: darkgoldenrod;
