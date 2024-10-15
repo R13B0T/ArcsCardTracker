@@ -1,3 +1,8 @@
+/* Apply box-sizing globally */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
 /* Root Variables for Theming */
 :root {
     /* Light Mode Colors */
@@ -11,9 +16,9 @@
     --button-color: #ffffff;        /* White text on buttons */
     --nav-background: #2c3e50;      /* Dark blue for header */
     --header-text-color: #ffffff;   /* White text for header */
+    --active-button-background: #2980b9; /* Darker blue for active buttons */
 }
 
-/* Dark Mode Variables */
 .dark-mode {
     /* Dark Mode Colors */
     --primary-color: #ecf0f1;       /* Light gray */
@@ -26,6 +31,7 @@
     --button-color: #ffffff;        /* White text on buttons */
     --nav-background: #34495e;      /* Match header background to card background */
     --header-text-color: #ecf0f1;   /* Light gray text for header */
+    --active-button-background: #c0392b; /* Darker red for active buttons */
 }
 
 /* Global Styles */
@@ -38,21 +44,14 @@ body {
     font-size: 16px; /* Base font size */
 }
 
-/* Container */
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
 /* Navigation Bar */
 .navbar {
     background-color: var(--nav-background);
     padding: 10px 20px;
     border-radius: 8px;
     margin-bottom: 20px;
-    position: relative;
     text-align: center;
+    position: relative;
 }
 
 .navbar-header {
@@ -88,7 +87,7 @@ body {
 }
 
 .reset-button:hover {
-    background-color: var(--accent-color);
+    background-color: var(--active-button-background);
 }
 
 /* Navigation Buttons */
@@ -114,7 +113,7 @@ body {
 
 .nav-button:hover,
 .nav-button.active {
-    background-color: var(--accent-color);
+    background-color: var(--active-button-background);
 }
 
 /* Theme Toggle Button */
@@ -134,7 +133,44 @@ body {
 }
 
 .theme-toggle:hover {
-    background-color: var(--accent-color);
+    background-color: var(--active-button-background);
+}
+
+/* Search Container */
+.search-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+}
+
+#search-input {
+    width: 100%;
+    max-width: 600px;
+    padding: 10px 15px;
+    font-size: 16px;
+    border: 1px solid var(--primary-color);
+    border-radius: 5px;
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    transition: border-color 0.3s;
+}
+
+#search-input:focus {
+    outline: none;
+    border-color: var(--accent-color);
+}
+
+/* Hide visually but remain accessible to screen readers */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
 }
 
 /* Filter Buttons */
@@ -143,6 +179,7 @@ body {
     flex-wrap: wrap;
     justify-content: center;
     gap: 10px;
+    margin-top: 10px;
     margin-bottom: 30px;
 }
 
@@ -156,139 +193,110 @@ body {
 }
 
 /* Specific Filter Button Colors */
-.red-button {
+.filter-button.red-button,
+.assign-button.red-button {
     background-color: red;
     color: white;
 }
 
-.red-button:hover,
-.red-button.active {
+.filter-button.red-button:hover,
+.filter-button.red-button.active,
+.assign-button.red-button:hover,
+.assign-button.red-button.active {
     background-color: darkred;
     color: white;
 }
 
-.blue-button {
+.filter-button.blue-button,
+.assign-button.blue-button {
     background-color: blue;
     color: white;
 }
 
-.blue-button:hover,
-.blue-button.active {
+.filter-button.blue-button:hover,
+.filter-button.blue-button.active,
+.assign-button.blue-button:hover,
+.assign-button.blue-button.active {
     background-color: darkblue;
     color: white;
 }
 
-.gold-button {
-    background-color: yellow;
-    color: black;
-}
-
-.gold-button:hover,
-.gold-button.active {
+.filter-button.gold-button,
+.assign-button.gold-button {
     background-color: gold;
     color: black;
 }
 
-.white-button {
+.filter-button.gold-button:hover,
+.filter-button.gold-button.active,
+.assign-button.gold-button:hover,
+.assign-button.gold-button.active {
+    background-color: darkgoldenrod;
+    color: black;
+}
+
+.filter-button.white-button,
+.assign-button.white-button {
     background-color: white;
     color: black;
     border: 1px solid #ccc;
 }
 
-.white-button:hover,
-.white-button.active {
+.filter-button.white-button:hover,
+.filter-button.white-button.active,
+.assign-button.white-button:hover,
+.assign-button.white-button.active {
     background-color: #f0f0f0;
     color: black;
 }
 
-.court-button {
+.filter-button.court-button,
+.assign-button.court-button {
     background-color: purple;
     color: white;
 }
 
-.court-button:hover,
-.court-button.active {
+.filter-button.court-button:hover,
+.filter-button.court-button.active,
+.assign-button.court-button:hover,
+.assign-button.court-button.active {
     background-color: indigo;
     color: white;
 }
 
-.draft-button {
+.filter-button.draft-button,
+.assign-button.draft-button {
     background-color: lightgray;
     color: black;
 }
 
-.draft-button:hover,
-.draft-button.active {
+.filter-button.draft-button:hover,
+.filter-button.draft-button.active,
+.assign-button.draft-button:hover,
+.assign-button.draft-button.active {
     background-color: gray;
     color: black;
-}
-
-/* Ensure colors don't change in dark mode */
-.dark-mode .red-button,
-.dark-mode .red-button:hover,
-.dark-mode .red-button.active {
-    background-color: red;
-    color: white;
-}
-
-.dark-mode .blue-button,
-.dark-mode .blue-button:hover,
-.dark-mode .blue-button.active {
-    background-color: blue;
-    color: white;
-}
-
-.dark-mode .gold-button,
-.dark-mode .gold-button:hover,
-.dark-mode .gold-button.active {
-    background-color: yellow;
-    color: black;
-}
-
-.dark-mode .white-button,
-.dark-mode .white-button:hover,
-.dark-mode .white-button.active {
-    background-color: white;
-    color: black;
-}
-
-.dark-mode .court-button,
-.dark-mode .court-button:hover,
-.dark-mode .court-button.active {
-    background-color: purple;
-    color: white;
-}
-
-.dark-mode .draft-button,
-.dark-mode .draft-button:hover,
-.dark-mode .draft-button.active {
-    background-color: lightgray;
-    color: black;
-}
-
-/* Remove any conflicting hover and active styles */
-.filter-button:hover,
-.filter-button.active {
-    background-color: unset;
-    color: unset;
 }
 
 /* Card List */
 .card-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Increased min-width to 320px */
     gap: 20px;
-    padding: 20px; /* Added padding to match the gap between cards */
+    padding: 20px;
 }
 
 /* Individual Card */
 .card {
     background-color: var(--card-background);
     border-radius: 10px;
-    padding: 20px;
+    padding: 15px; /* Reduced padding from 20px to 15px */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s;
     color: var(--font-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .card:hover {
@@ -307,28 +315,126 @@ body {
 }
 
 .card .player-picker {
-    margin-top: 10px;
+    display: flex;
+    flex-wrap: nowrap; /* Prevent buttons from wrapping */
+    gap: 5px; /* Reduced gap from 10px to 5px */
+    margin-top: auto;
+    overflow: hidden; /* Hide any overflow to prevent scroll */
+    padding: 0 5px; /* Add horizontal padding to prevent clipping */
+    justify-content: center; /* Center the buttons */
 }
 
-.card select {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid var(--primary-color);
+/* Assignment Buttons */
+.assign-button {
+    width: 44px; /* Adjusted width based on available space */
+    height: 28px; /* Maintain a reasonable height */
+    padding: 3px 6px; /* Maintain or slightly adjust padding */
+    margin: 0; /* Remove any default margins */
+    border: none; /* Remove default borders */
     border-radius: 5px;
-    background-color: var(--secondary-color);
-    color: var(--primary-color);
-    font-size: 14px;
+    cursor: pointer;
+    font-size: 10px; /* Ensure text fits within the button */
+    background-color: var(--button-background);
+    color: var(--button-color);
+    transition: background-color 0.3s, color 0.3s, transform 0.2s, border 0.3s;
+    flex: 0 0 auto; /* Prevent buttons from growing or shrinking */
 }
 
-.card select:focus {
-    outline: none;
-    border-color: var(--accent-color);
+/* Match Filter Button Colors for Assignment Buttons */
+
+/* Red Button */
+.assign-button.red-button {
+    background-color: red;
+    color: white;
+}
+
+.assign-button.red-button:hover,
+.assign-button.red-button.active {
+    background-color: darkred;
+    color: white;
+}
+
+/* Blue Button */
+.assign-button.blue-button {
+    background-color: blue;
+    color: white;
+}
+
+.assign-button.blue-button:hover,
+.assign-button.blue-button.active {
+    background-color: darkblue;
+    color: white;
+}
+
+/* Gold Button */
+.assign-button.gold-button {
+    background-color: gold;
+    color: black;
+}
+
+.assign-button.gold-button:hover,
+.assign-button.gold-button.active {
+    background-color: darkgoldenrod;
+    color: black;
+}
+
+/* White Button */
+.assign-button.white-button {
+    background-color: white;
+    color: black;
+    border: 1px solid #ccc;
+}
+
+.assign-button.white-button:hover,
+.assign-button.white-button.active {
+    background-color: #f0f0f0;
+    color: black;
+}
+
+/* Court Button */
+.assign-button.court-button {
+    background-color: purple;
+    color: white;
+}
+
+.assign-button.court-button:hover,
+.assign-button.court-button.active {
+    background-color: indigo;
+    color: white;
+}
+
+/* Draft Button */
+.assign-button.draft-button {
+    background-color: lightgray;
+    color: black;
+}
+
+.assign-button.draft-button:hover,
+.assign-button.draft-button.active {
+    background-color: gray;
+    color: black;
+}
+
+/* Hover and Active States for Assignment Buttons */
+.assign-button:hover {
+    background-color: var(--active-button-background);
+    transform: scale(1.05);
+}
+
+.assign-button.active {
+    background-color: var(--active-button-background);
+    color: var(--button-color);
+    border: 2px solid black; /* Add black border */
+}
+
+.dark-mode .assign-button.active {
+    border: 2px solid white; /* White border for better contrast in dark mode */
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
     body {
-        font-size: 18px; /* Increase base font size on smaller screens */
+        font-size: 16px; /* Slightly reduced font size for better fit */
     }
 
     .navbar h1 {
@@ -336,31 +442,33 @@ body {
     }
 
     .nav-button {
-        font-size: 18px;
-        padding: 12px 18px;
+        font-size: 16px;
+        padding: 10px 15px;
     }
 
     .reset-button {
-        font-size: 16px;
-        padding: 10px 18px;
+        font-size: 14px;
+        padding: 8px 16px;
     }
 
     .filter-button {
-        font-size: 16px;
-        padding: 10px 16px;
+        font-size: 14px;
+        padding: 8px 12px;
     }
 
     .card h2 {
-        font-size: 22px;
+        font-size: 20px;
     }
 
     .card .description {
-        font-size: 16px;
+        font-size: 14px;
     }
 
-    .card select {
-        font-size: 16px;
-        padding: 10px;
+    .assign-button {
+        width: 40px; /* Adjusted width */
+        height: 26px; /* Adjusted height */
+        font-size: 9px; /* Adjusted font size */
+        padding: 2px 5px; /* Adjusted padding */
     }
 }
 
@@ -403,15 +511,17 @@ body {
         font-size: 14px;
     }
 
-    .card select {
-        font-size: 14px;
-        padding: 8px;
+    .assign-button {
+        width: 35px; /* Further adjusted width for very small screens */
+        height: 24px; /* Further adjusted height for very small screens */
+        font-size: 8px; /* Minimum font size */
+        padding: 1px 4px; /* Minimum padding */
     }
 }
 
 @media (max-width: 400px) {
     body {
-        font-size: 20px; /* Further increase base font size for very small screens */
+        font-size: 14px; /* Further reduce base font size for very small screens */
     }
 
     .navbar h1 {
@@ -419,31 +529,33 @@ body {
     }
 
     .nav-button {
-        font-size: 18px;
-        padding: 12px 18px;
+        font-size: 14px;
+        padding: 8px 12px;
     }
 
     .reset-button {
-        font-size: 16px;
-        padding: 10px 16px;
+        font-size: 14px;
+        padding: 8px 14px;
     }
 
     .filter-button {
-        font-size: 16px;
-        padding: 10px 14px;
+        font-size: 12px;
+        padding: 6px 10px;
     }
 
     .card h2 {
-        font-size: 22px;
+        font-size: 18px;
     }
 
     .card .description {
-        font-size: 16px;
+        font-size: 12px;
     }
 
-    .card select {
-        font-size: 16px;
-        padding: 10px;
+    .assign-button {
+        width: 30px; /* Minimum width */
+        height: 22px; /* Minimum height */
+        font-size: 7px; /* Minimum font size */
+        padding: 0px 3px; /* Minimum padding */
     }
 }
 
@@ -463,7 +575,8 @@ body {
 
 /* Accessibility Focus States */
 button:focus,
-select:focus {
+select:focus,
+input:focus {
     outline: 2px dashed var(--accent-color);
     outline-offset: 4px;
 }
