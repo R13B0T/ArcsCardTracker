@@ -1,3 +1,21 @@
+@font-face {
+    font-family: 'FMBolyarPro';
+    src: url('fonts/FMBolyarPro-100.woff2') format('woff2'),
+         url('fonts/FMBolyarPro-100.woff') format('woff'),
+         url('fonts/FMBolyarPro-100.ttf') format('truetype');
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'FMBolyarPro';
+    src: url('fonts/FMBolyarPro-300.woff2') format('woff2'),
+         url('fonts/FMBolyarPro-300.woff') format('woff'),
+         url('fonts/FMBolyarPro-300.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
 /* Apply box-sizing globally */
 *, *::before, *::after {
     box-sizing: border-box;
@@ -32,74 +50,6 @@
     --nav-background: #34495e;      /* Match header background to card background */
     --header-text-color: #ecf0f1;   /* Light gray text for header */
     --active-button-background: #c0392b; /* Darker red for active buttons */
-}
-
-/* Assignment Buttons on Cards */
-.assign-button.red-button {
-    background-color: red;
-    color: white;
-}
-
-.assign-button.red-button:hover,
-.assign-button.red-button.active {
-    background-color: darkred;
-    color: white;
-}
-
-.assign-button.blue-button {
-    background-color: blue;
-    color: white;
-}
-
-.assign-button.blue-button:hover,
-.assign-button.blue-button.active {
-    background-color: darkblue;
-    color: white;
-}
-
-.assign-button.gold-button {
-    background-color: gold;
-    color: black;
-}
-
-.assign-button.gold-button:hover,
-.assign-button.gold-button.active {
-    background-color: darkgoldenrod;
-    color: black;
-}
-
-.assign-button.white-button {
-    background-color: white;
-    color: black;
-    border: 1px solid #ccc; /* Light border for white button */
-}
-
-.assign-button.white-button:hover,
-.assign-button.white-button.active {
-    background-color: #f0f0f0;
-    color: black;
-}
-
-.assign-button.court-button {
-    background-color: purple;
-    color: white;
-}
-
-.assign-button.court-button:hover,
-.assign-button.court-button.active {
-    background-color: indigo;
-    color: white;
-}
-
-.assign-button.draft-button {
-    background-color: lightgray;
-    color: black;
-}
-
-.assign-button.draft-button:hover,
-.assign-button.draft-button.active {
-    background-color: gray;
-    color: black;
 }
 
 /* Global Styles */
@@ -268,71 +218,89 @@ body {
 }
 
 /* Specific Filter Button Colors */
-.filter-button.red-button {
+.filter-button.red-button,
+.assign-button.red-button {
     background-color: red;
     color: white;
 }
 
 .filter-button.red-button:hover,
-.filter-button.red-button.active {
+.filter-button.red-button.active,
+.assign-button.red-button:hover,
+.assign-button.red-button.active {
     background-color: darkred;
     color: white;
 }
 
-.filter-button.blue-button {
+.filter-button.blue-button,
+.assign-button.blue-button {
     background-color: blue;
     color: white;
 }
 
 .filter-button.blue-button:hover,
-.filter-button.blue-button.active {
+.filter-button.blue-button.active,
+.assign-button.blue-button:hover,
+.assign-button.blue-button.active {
     background-color: darkblue;
     color: white;
 }
 
-.filter-button.gold-button {
+.filter-button.gold-button,
+.assign-button.gold-button {
     background-color: gold;
     color: black;
 }
 
 .filter-button.gold-button:hover,
-.filter-button.gold-button.active {
+.filter-button.gold-button.active,
+.assign-button.gold-button:hover,
+.assign-button.gold-button.active {
     background-color: darkgoldenrod;
     color: black;
 }
 
-.filter-button.white-button {
+.filter-button.white-button,
+.assign-button.white-button {
     background-color: white;
     color: black;
     border: 1px solid #ccc; /* Light border for white button */
 }
 
 .filter-button.white-button:hover,
-.filter-button.white-button.active {
+.filter-button.white-button.active,
+.assign-button.white-button:hover,
+.assign-button.white-button.active {
     background-color: #f0f0f0;
     color: black;
 }
 
 /* Court Button */
-.filter-button.court-button {
+.filter-button.court-button,
+.assign-button.court-button {
     background-color: purple;
     color: white;
 }
 
 .filter-button.court-button:hover,
-.filter-button.court-button.active {
+.filter-button.court-button.active,
+.assign-button.court-button:hover,
+.assign-button.court-button.active {
     background-color: indigo;
     color: white;
 }
 
 /* Draft Button */
-.filter-button.draft-button {
+.filter-button.draft-button,
+.assign-button.draft-button {
     background-color: lightgray;
     color: black;
 }
 
 .filter-button.draft-button:hover,
-.filter-button.draft-button.active {
+.filter-button.draft-button.active,
+.assign-button.draft-button:hover,
+.assign-button.draft-button.active {
     background-color: gray;
     color: black;
 }
@@ -386,6 +354,90 @@ body {
     overflow: hidden; /* Hide any overflow to prevent scroll */
     padding: 0 5px; /* Add horizontal padding to prevent clipping */
     justify-content: center; /* Center the buttons */
+}
+
+/* Assignment Buttons */
+.assign-button {
+    width: 44px; /* Adjusted width based on available space */
+    height: 28px; /* Maintain a reasonable height */
+    padding: 3px 6px; /* Maintain or slightly adjust padding */
+    margin: 0; /* Remove any default margins */
+    border: none; /* Remove default borders */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 10px; /* Ensure text fits within the button */
+    background-color: var(--button-background);
+    color: var(--button-color);
+    transition: background-color 0.3s, color 0.3s, transform 0.2s, border 0.3s;
+    flex: 0 0 auto; /* Prevent buttons from growing or shrinking */
+}
+
+/* Specific Colours for Player Assignment Buttons */
+.assign-button.red-button {
+    background-color: red;
+    color: white;
+}
+
+.assign-button.red-button:hover,
+.assign-button.red-button.active {
+    background-color: darkred;
+    color: white;
+}
+
+.assign-button.blue-button {
+    background-color: blue;
+    color: white;
+}
+
+.assign-button.blue-button:hover,
+.assign-button.blue-button.active {
+    background-color: darkblue;
+    color: white;
+}
+
+.assign-button.gold-button {
+    background-color: gold;
+    color: black;
+}
+
+.assign-button.gold-button:hover,
+.assign-button.gold-button.active {
+    background-color: darkgoldenrod;
+    color: black;
+}
+
+.assign-button.white-button {
+    background-color: white;
+    color: black;
+    border: 1px solid #ccc;
+}
+
+.assign-button.white-button:hover,
+.assign-button.white-button.active {
+    background-color: #f0f0f0;
+    color: black;
+}
+
+.assign-button.court-button {
+    background-color: purple;
+    color: white;
+}
+
+.assign-button.court-button:hover,
+.assign-button.court-button.active {
+    background-color: indigo;
+    color: white;
+}
+
+.assign-button.draft-button {
+    background-color: lightgray;
+    color: black;
+}
+
+.assign-button.draft-button:hover,
+.assign-button.draft-button.active {
+    background-color: gray;
+    color: black;
 }
 
 /* Hover and Active States for Assignment Buttons */
