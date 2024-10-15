@@ -67,7 +67,7 @@ function initializeApp() {
             filterButtons.forEach(btn => btn.classList.remove('active'));
             button.classList.add('active');
             currentFilter = button.getAttribute('data-color');
-            displayAllAssignedCards(currentFilter); // Show all assigned cards (Court, Leader, Lore)
+            displayAllAssignedCards(currentFilter); // Show all assigned cards (Leader, Lore, Court)
         });
     });
 
@@ -98,15 +98,21 @@ function displayAllCards(type) {
     displayFilteredCards(filteredCards);
 }
 
-// New function to display all assigned cards (Court, Leader, Lore) for the selected player
+// New function to display all assigned cards (Leader, Lore, Court) for the selected player in specific order
 function displayAllAssignedCards(playerColor) {
     const cardList = document.getElementById('card-list');
     cardList.innerHTML = '';
 
-    // Filter all cards (Court, Leader, Lore) by the selected player color
+    // Filter all cards (Leader, Lore, Court) by the selected player color
     let assignedCards = cardData.filter(card => card.player === playerColor);
 
-    displayFilteredCards(assignedCards); // Display all filtered cards
+    // Sort cards by type: Leader first, then Lore, then Court
+    assignedCards.sort((a, b) => {
+        const order = { 'leader': 1, 'lore': 2, 'court': 3 };
+        return order[a.type] - order[b.type];
+    });
+
+    displayFilteredCards(assignedCards); // Display all sorted cards
 }
 
 // Function to display filtered cards
@@ -135,12 +141,7 @@ function displayFilteredCards(cards) {
         playerPicker.classList.add('player-picker');
 
         // Define the options array based on card type
-        let options;
-        if (card.type === 'court') {
-            options = ['none', 'court', 'red', 'blue', 'gold', 'white'];
-        } else {
-            options = ['none', 'draft', 'red', 'blue', 'gold', 'white'];
-        }
+        let options = ['none', 'court', 'red', 'blue', 'gold', 'white'];
 
         // Create assignment buttons
         options.forEach(optionValue => {
