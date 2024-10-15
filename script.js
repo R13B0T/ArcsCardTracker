@@ -61,13 +61,13 @@ function initializeApp() {
         });
     });
 
-    // Event listeners for filter buttons
+    // Event listeners for filter buttons (player selection)
     filterButtons.forEach(button => {
         button.addEventListener('click', () => {
             filterButtons.forEach(btn => btn.classList.remove('active'));
             button.classList.add('active');
             currentFilter = button.getAttribute('data-color');
-            displayAllCards(currentType);
+            displayAllAssignedCards(currentFilter); // Update to show all assigned cards (court, leader, lore)
         });
     });
 
@@ -96,6 +96,16 @@ function displayAllCards(type) {
     }
 
     displayFilteredCards(filteredCards);
+}
+
+// New function to display all assigned cards (court, leader, lore) for the selected player
+function displayAllAssignedCards(playerColor) {
+    const cardList = document.getElementById('card-list');
+    cardList.innerHTML = '';
+
+    let assignedCards = cardData.filter(card => card.player === playerColor); // Filter all types (court, leader, lore) by player
+
+    displayFilteredCards(assignedCards); // Display all filtered cards
 }
 
 // Function to display filtered cards
