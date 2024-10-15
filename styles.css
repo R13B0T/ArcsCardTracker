@@ -205,13 +205,16 @@ body {
     margin-bottom: 30px;
 }
 
-/* Updated headers: H2 with max font size 14px and FMBolyarPro-100 font */
-.card h2 {
-    margin-top: 0;
-    font-size: 14px; /* Max size set */
-    font-family: 'FMBolyarPro', sans-serif; /* Font applied */
-    font-weight: 100; /* Using FMBolyarPro-100 */
-    margin-bottom: 10px;
+.filter-button {
+    width: 44px; /* Matching the width of card buttons */
+    height: 28px; /* Matching the height of card buttons */
+    padding: 3px 6px; /* Adjusted padding */
+    margin: 0;
+    border: none; /* No border to match card buttons */
+    border-radius: 5px; /* Same border radius as card buttons */
+    cursor: pointer;
+    font-size: 10px; /* Font size matching card buttons */
+    transition: background-color 0.3s, color 0.3s;
 }
 
 /* Specific Filter Button Colors */
@@ -250,8 +253,8 @@ body {
 }
 
 .filter-button.gold-button:hover,
-filter-button.gold-button.active,
-.assign-button.gold-button:hover,
+.filter-button.gold-button.active,
+assign-button.gold-button:hover,
 .assign-button.gold-button.active {
     background-color: darkgoldenrod;
     color: black;
@@ -261,7 +264,7 @@ filter-button.gold-button.active,
 .assign-button.white-button {
     background-color: white;
     color: black;
-    border: 1px solid #ccc;
+    border: 1px solid #ccc; /* Light border for white button */
 }
 
 .filter-button.white-button:hover,
@@ -272,6 +275,7 @@ filter-button.gold-button.active,
     color: black;
 }
 
+/* Court Button */
 .filter-button.court-button,
 .assign-button.court-button {
     background-color: purple;
@@ -286,6 +290,7 @@ filter-button.gold-button.active,
     color: white;
 }
 
+/* Draft Button */
 .filter-button.draft-button,
 .assign-button.draft-button {
     background-color: lightgray;
@@ -325,6 +330,17 @@ filter-button.gold-button.active,
     transform: translateY(-5px);
 }
 
+/* Updated headers: H2 with max font size 14px and FMBolyarPro-100 font */
+.card h2 {
+    margin-top: 0;
+    font-size: 14px; /* Max size set */
+    font-family: 'FMBolyarPro', sans-serif; /* Font applied */
+    font-weight: 100; /* Using FMBolyarPro-100 */
+    margin-bottom: 10px;
+    text-align: center; /* Centres the text */
+}
+
+/* Card Description */
 .card .description {
     font-size: 14px;
     margin-bottom: 15px;
