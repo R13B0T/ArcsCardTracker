@@ -195,10 +195,10 @@ body {
     margin-bottom: 30px;
 }
 
-/* Updated headers: H2 with max font size 18px */
+/* Updated headers: H2 with max font size 14px */
 .card h2 {
     margin-top: 0;
-    font-size: 18px; /* Max size set */
+    font-size: 14px; /* Max size set */
     font-family: 'FMBolyarPro', sans-serif; /* Font applied */
     margin-bottom: 10px;
 }
@@ -387,7 +387,7 @@ body {
     }
 
     .card h2 {
-        font-size: 18px;
+        font-size: 14px;
     }
 
     .card .description {
@@ -434,7 +434,7 @@ body {
     }
 
     .card h2 {
-        font-size: 18px;
+        font-size: 14px;
     }
 
     .card .description {
@@ -474,7 +474,7 @@ body {
     }
 
     .card h2 {
-        font-size: 18px;
+        font-size: 14px;
     }
 
     .card .description {
