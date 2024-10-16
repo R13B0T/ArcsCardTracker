@@ -206,14 +206,18 @@ body {
 }
 
 .filter-button {
-    width: 44px; /* Matching the width of card buttons */
-    height: 28px; /* Matching the height of card buttons */
-    padding: 3px 6px; /* Adjusted padding */
+    text-align: center;  /* Ensures the text is centred */
+    display: flex;
+    align-items: center;
+    justify-content: center;  /* Ensures the content inside the button is centred vertically and horizontally */
+    width: 44px;  /* Set width as needed */
+    height: 28px;  /* Set height as needed */
+    padding: 3px 6px;
     margin: 0;
-    border: none; /* No border to match card buttons */
-    border-radius: 5px; /* Same border radius as card buttons */
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
-    font-size: 10px; /* Font size matching card buttons */
+    font-size: 10px;  /* Adjust font size as needed */
     transition: background-color 0.3s, color 0.3s;
 }
 
