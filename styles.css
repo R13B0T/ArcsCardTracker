@@ -526,6 +526,9 @@ body {
     .filter-button {
         font-size: 14px;
         padding: 8px 12px;
+        justify-content: center;
+        width: 100%; /* Ensure it uses the full width */
+        margin: 0 auto;
     }
 
     .card h2 {
