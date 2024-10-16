@@ -523,13 +523,18 @@ body {
         padding: 10px 15px;
     }
 
-    .filter-button {
-        font-size: 14px;
-        padding: 8px 12px;
+    .filter-buttons {
         justify-content: center;
-        width: 100%; /* Ensure it uses the full width */
-        margin: 0 auto;
+        flex-wrap: wrap;
+        gap: 10px;  /* Space between the buttons */
     }
+
+    .filter-button {
+        width: 44px;  /* Set a consistent width */
+        margin: 0;    /* Remove any extra margins */
+        padding: 10px 15px;  /* Adjust padding as needed */
+    }
+}
 
     .card h2 {
         font-size: 14px;
@@ -545,7 +550,7 @@ body {
         font-size: 8px; /* Minimum font size */
         padding: 1px 4px; /* Minimum padding */
     }
-}
+
 
 @media (max-width: 400px) {
     body {
